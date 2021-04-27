@@ -1,5 +1,9 @@
 <?php
 add_action( 'init', function () {
+    // Fix for undefined function error on feed generation with cron
+    if ( ! function_exists( 'getallheaders' ) ) {
+        return;
+    }
     $request_headers = getallheaders();
     if ( isset( $request_headers['X-Hub-Signature-256'] ) ) {
         $git_dir_path = 'wp-content/plugins/wordpress-plugin-auto-git-pull'; // Add plugin directory name here - Get dynamically later
